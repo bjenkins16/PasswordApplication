@@ -133,5 +133,9 @@ public class Controller extends Observable {
 		return uob;
 	}
 	
+	public boolean userExists(String uname) {
+		return (model.userExists(uname));
+	}
+	
 	
 }

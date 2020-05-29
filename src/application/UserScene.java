@@ -33,7 +33,7 @@ public class UserScene extends Scene {
 		Label pwd = new Label(uob.getPwd());
 		Label new_ul = new Label("new Username");
 		Label new_pl = new Label("new Password");
-		
+		Label error = new Label();
 		TextField ut = new TextField();
 		TextField pt = new TextField();
 		
@@ -49,6 +49,7 @@ public class UserScene extends Scene {
 		pt.setVisible(false);
 		submit.setVisible(false);
 		cancel.setVisible(false);
+		error.setVisible(false);
 		
 		edit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -82,6 +83,7 @@ public class UserScene extends Scene {
 				cancel.setVisible(false);
 				back.setVisible(true);
 				edit.setVisible(true);
+				error.setVisible(false);
 			}
 		});
 		
@@ -95,24 +97,32 @@ public class UserScene extends Scene {
 				new_uname = ut.getText();
 				new_pwd = pt.getText();
 				
-				if(new_uname.length() > 0 && new_pwd.length() > 0) {
-					new_uob.setUname(new_uname);
-					new_uob.setPwd(new_pwd);
-					controller.updateUser(old_uob, new_uob);
-					controller.userScene();
-				} else if (new_uname.length() > 0) {
-					new_uob.setUname(new_uname);
-					controller.updateUser(old_uob, new_uob);
-					controller.userScene();
-				} else if (new_pwd.length() > 0) {
-					new_uob.setPwd(new_pwd);
-					controller.updateUser(old_uob, new_uob);
-					controller.userScene();
+				if(!validate(new_uname, new_pwd)) {
+					error.setText("*Username and Password must only contain upper and lower case characters and numbers of length 6 to 20");
 				} else {
-					controller.userScene();
+				
+					if(new_uname.length() > 0 && new_pwd.length() > 0 && !controller.userExists(new_uname)) {
+						new_uob.setUname(new_uname);
+						new_uob.setPwd(new_pwd);
+						controller.updateUser(old_uob, new_uob);
+						controller.userScene();
+					} else if (new_uname.length() > 0 && !controller.userExists(new_uname)) {
+						new_uob.setUname(new_uname);
+						controller.updateUser(old_uob, new_uob);
+						controller.userScene();
+					} else if(new_uname.length() > 0 && controller.userExists(new_uname)) {
+						error.setText("*Username already exists");
+					} else if (new_pwd.length() > 0) {
+						new_uob.setPwd(new_pwd);
+						controller.updateUser(old_uob, new_uob);
+						controller.userScene();
+					} else {
+						controller.userScene();
+					}
 				}
 			}
 		});
+		
 		
 		HBox hb = new HBox();
 		hb.setPadding(new Insets(10,10,10,10));
@@ -129,7 +139,21 @@ public class UserScene extends Scene {
 		GridPane.setConstraints(new_pl, 2, 1);
 		GridPane.setConstraints(pt, 3, 1);
 		GridPane.setConstraints(hb, 0, 2, 4, 1);
+		GridPane.setConstraints(error, 2, 2, 2, 1);
 		
-		gp.getChildren().addAll(ul, pl, uname, pwd, new_ul, new_pl, ut, pt, hb);
+		gp.getChildren().addAll(ul, pl, uname, pwd, new_ul, new_pl, ut, pt, hb, error);
 	}
+	
+	private boolean validate(String uname, String pwd) {
+		if(uname.length() > 0 && pwd.length() > 0) {
+			return InputValidator.username(uname) && InputValidator.password(pwd);
+		} else if (uname.length() > 0) {
+			return InputValidator.username(uname);
+		} else if (pwd.length() > 0) {
+			return InputValidator.password(pwd);
+		}
+		
+		return true;
+	}
+	
 }

@@ -53,7 +53,15 @@ public class SignupScene extends Scene {
 				} else if(!pt.getText().equals(cpt.getText())) {
 					error.setVisible(true);
 					error.setText("*Password fields do not match");
-				} else { 
+				} else if(!InputValidator.username(ut.getText())){
+					error.setVisible(true);
+					error.setText("*Password can only contain letters and numbers and be of length 6 to 20");
+				} else if(!InputValidator.password(pt.getText())) {
+					error.setVisible(true);
+					error.setText("*Username can only contain letters and numbers and be of length 6 to 20");
+				} else if(controller.userExists(ut.getText())){
+					error.setText("*Username already exists");
+				} else {
 					controller.addUser(new User_Object(ut.getText(), pt.getText(), ft.getText(), lt.getText()));
 				}
 			}

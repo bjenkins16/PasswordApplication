@@ -142,6 +142,28 @@ public class Model {
 		return;
 	}
 	
+	public boolean userExists(String uname) {
+		Connection conn = connect();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM u_info WHERE user=?");
+			ps.setString(1, uname);
+			
+			ResultSet res = ps.executeQuery();
+			
+			if(!res.next()) {
+				return false;
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
 	
 	//insert new record for website/password
 	public void insert_record(Web_Object wob) {
