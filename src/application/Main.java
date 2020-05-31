@@ -1,5 +1,6 @@
 package application;
 	
+import java.io.FileInputStream;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,6 +10,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 public class Main extends Application implements Observer{
@@ -31,9 +33,13 @@ public class Main extends Application implements Observer{
 			
 			//start application with the the login scene
 			Scene scene = SceneFactory.getScene(SceneEnum.LOGIN, controller);
+			
 			primaryStage.setScene(scene);
-			primaryStage.setMinWidth(600);
-			primaryStage.setMinHeight(800);
+			//primaryStage.setMinWidth(600);
+			//primaryStage.setMinHeight(800);
+			FileInputStream fis = new FileInputStream("../PassApp/icon.jpg");
+			primaryStage.getIcons().add(new Image(fis));
+			primaryStage.setTitle("Password Storehouse");
 			primaryStage.show();
 			
 		} catch(Exception e) {

@@ -64,15 +64,6 @@ public class Controller extends Observable {
 	 * 
 	 * */
 	
-	public void login(User_Object user) {
-		if(model.open_session(user)) {
-			uob = user;
-			mainScene();
-		} else {
-			loginScene();
-		}
-	}
-	
 	public void logout() {
 		model.close_session(uob);
 		uob = null;
@@ -92,6 +83,7 @@ public class Controller extends Observable {
 	
 	public void updateUser(User_Object old_uob, User_Object new_uob) {
 		model.update_user(old_uob, new_uob);
+		uob = new_uob;
 	}
 	
 	public void deleteRecord(Web_Object wob) {
@@ -108,7 +100,7 @@ public class Controller extends Observable {
 	
 	public void updateRecord(Web_Object wob_old, Web_Object wob_new) {
 		wob_new.setUname(uob.getUname());
-		wob_old.setUname(wob_old.getUname());
+		wob_old.setUname(uob.getUname());
 		model.update_record(wob_new, wob_old);
 	}
 	
@@ -117,6 +109,15 @@ public class Controller extends Observable {
 	 * Data base interaction operations with returns
 	 * 
 	 * */
+	
+	public boolean login(User_Object user) {
+		if(model.open_session(user)) {
+			uob = user;
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public ArrayList<Web_Object> getAllRecords() {
 		Web_Object wob = model.get_records(uob);

@@ -14,8 +14,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class EditScene extends Scene {
 	private GridPane gp;
@@ -33,6 +39,12 @@ public class EditScene extends Scene {
 	//setup main scene
 	private void setup() {
 		
+		gp.setPadding(new Insets(10,10,10,10));
+		gp.setVgap(5);
+		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		
 		TableView table = getTable();
 		
 		Button delete = new Button("Delete");
@@ -42,8 +54,10 @@ public class EditScene extends Scene {
 			@Override
 			public void handle(ActionEvent e) {
 				Web_Object wob = (Web_Object)table.getSelectionModel().getSelectedItem();
-				controller.deleteRecord(wob);
-				controller.editScene();
+				if(wob != null) {
+					controller.deleteRecord(wob);
+					controller.editScene();
+				}
 			}
 		});
 		
@@ -53,6 +67,23 @@ public class EditScene extends Scene {
 				controller.mainScene();
 			}
 		});
+		
+		delete.setStyle("-fx-background-color: #00A8F3;");
+		delete.setFont(Font.font("Verdana"));
+		delete.setTextFill(Color.WHITE);
+		
+		done.setStyle("-fx-background-color: #00A8F3;");
+		done.setFont(Font.font("Verdana"));
+		done.setTextFill(Color.WHITE);
+		
+		DropShadow borderGlow= new DropShadow();
+		borderGlow.setOffsetY(0f);
+		borderGlow.setOffsetX(0f);
+		borderGlow.setColor(Color.web("0xFF95FC"));
+		borderGlow.setWidth(0);
+		borderGlow.setHeight(0);
+		done.setEffect(borderGlow);
+		delete.setEffect(borderGlow);
 		
 		HBox hb = new HBox();
 		hb.setPadding(new Insets(10,10,10,10));

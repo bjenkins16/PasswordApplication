@@ -8,8 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class UserScene extends Scene {
 	private GridPane gp;
@@ -26,6 +32,12 @@ public class UserScene extends Scene {
 	
 	private void setup() {
 		User_Object uob = controller.getUser();
+		
+		gp.setPadding(new Insets(10,10,10,10));
+		gp.setVgap(5);
+		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		Label ul = new Label("Username: ");
 		Label pl = new Label("Password: ");
@@ -101,16 +113,16 @@ public class UserScene extends Scene {
 					error.setText("*Username and Password must only contain upper and lower case characters and numbers of length 6 to 20");
 				} else {
 				
-					if(new_uname.length() > 0 && new_pwd.length() > 0 && !controller.userExists(new_uname)) {
+					if(new_uname.length() > 0 && new_pwd.length() > 0 && (!controller.userExists(new_uname) || new_uname.equals(old_uob.getUname()))) {
 						new_uob.setUname(new_uname);
 						new_uob.setPwd(new_pwd);
 						controller.updateUser(old_uob, new_uob);
 						controller.userScene();
-					} else if (new_uname.length() > 0 && !controller.userExists(new_uname)) {
+					} else if (new_uname.length() > 0 && (!controller.userExists(new_uname) || new_uname.equals(old_uob.getUname()))) {
 						new_uob.setUname(new_uname);
 						controller.updateUser(old_uob, new_uob);
 						controller.userScene();
-					} else if(new_uname.length() > 0 && controller.userExists(new_uname)) {
+					} else if(new_uname.length() > 0 && (controller.userExists(new_uname) && !new_uname.equals(old_uob.getUname()))) {
 						error.setText("*Username already exists");
 					} else if (new_pwd.length() > 0) {
 						new_uob.setPwd(new_pwd);
@@ -122,6 +134,33 @@ public class UserScene extends Scene {
 				}
 			}
 		});
+		
+		edit.setStyle("-fx-background-color: #00A8F3;");
+		edit.setFont(Font.font("Verdana"));
+		edit.setTextFill(Color.WHITE);
+		
+		cancel.setStyle("-fx-background-color: #00A8F3;");
+		cancel.setFont(Font.font("Verdana"));
+		cancel.setTextFill(Color.WHITE);
+		
+		submit.setStyle("-fx-background-color: #00A8F3;");
+		submit.setFont(Font.font("Verdana"));
+		submit.setTextFill(Color.WHITE);
+		
+		back.setStyle("-fx-background-color: #00A8F3;");
+		back.setFont(Font.font("Verdana"));
+		back.setTextFill(Color.WHITE);
+		
+		DropShadow borderGlow= new DropShadow();
+		borderGlow.setOffsetY(0f);
+		borderGlow.setOffsetX(0f);
+		borderGlow.setColor(Color.web("0xFF95FC"));
+		borderGlow.setWidth(0);
+		borderGlow.setHeight(0);
+		submit.setEffect(borderGlow);
+		back.setEffect(borderGlow);
+		edit.setEffect(borderGlow);
+		cancel.setEffect(borderGlow);
 		
 		
 		HBox hb = new HBox();

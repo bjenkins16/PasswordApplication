@@ -206,11 +206,11 @@ public class Model {
 		Connection conn = connect();
 		
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE web_info SET website=? AND uname=? AND u_pwd=? AND user=? WHERE website=? AND uname=? AND user=?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE web_info SET website=?, uname=?, u_pwd=?, user=? WHERE website=? AND uname=? AND user=?");
 			ps.setString(1, wob_new.getWebsite());
 			ps.setString(2, wob_new.getW_uname());
 			ps.setString(3, wob_new.getPwd());
-			ps.setString(4, wob_new.getUname());
+			ps.setString(4, wob_old.getUname());
 			ps.setString(5, wob_old.getWebsite());
 			ps.setString(6, wob_old.getW_uname());
 			ps.setString(7, wob_old.getUname());

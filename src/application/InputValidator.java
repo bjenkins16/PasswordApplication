@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
 	private static String PASSWORD_VALID = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])).{6,15}";
-	private static String USERNAME_VALID = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])).{6,15}";
+	private static String USERNAME_VALID = "^([a-zA-Z0-9]){6,15}";
 	
 	public static boolean password(String pwd) {
 		

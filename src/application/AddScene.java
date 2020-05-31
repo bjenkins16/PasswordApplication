@@ -8,8 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class AddScene extends Scene {
 	private GridPane gp;
@@ -25,6 +31,12 @@ public class AddScene extends Scene {
 	}
 	
 	private void setup() {
+		
+		gp.setPadding(new Insets(10,10,10,10));
+		gp.setVgap(5);
+		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		Label wl = new Label("Website");
 		Label ul = new Label("Username");
@@ -65,6 +77,23 @@ public class AddScene extends Scene {
 				controller.mainScene();
 			}
 		});
+		
+		submit.setStyle("-fx-background-color: #00A8F3;");
+		submit.setFont(Font.font("Verdana"));
+		submit.setTextFill(Color.WHITE);
+		
+		back.setStyle("-fx-background-color: #00A8F3;");
+		back.setFont(Font.font("Verdana"));
+		back.setTextFill(Color.WHITE);
+		
+		DropShadow borderGlow= new DropShadow();
+		borderGlow.setOffsetY(0f);
+		borderGlow.setOffsetX(0f);
+		borderGlow.setColor(Color.web("0xFF95FC"));
+		borderGlow.setWidth(0);
+		borderGlow.setHeight(0);
+		submit.setEffect(borderGlow);
+		back.setEffect(borderGlow);
 		
 		HBox hb = new HBox();
 		hb.setPadding(new Insets(10,10,10,10));

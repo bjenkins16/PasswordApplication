@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Controller.Controller;
@@ -13,7 +15,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class MainScene extends Scene{
 	private GridPane gp;
@@ -38,6 +46,8 @@ public class MainScene extends Scene{
 		gp.setPadding(new Insets(10,10,10,10));
 		gp.setVgap(5);
 		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		GridPane.setConstraints(mb,0,0);
 		GridPane.setConstraints(table, 0, 1);
@@ -90,6 +100,10 @@ public class MainScene extends Scene{
 	//create menu1 
 	private Menu menu1() {
 		Menu menu1 = new Menu("File");
+		
+		gp.setPadding(new Insets(10,10,10,10));
+		gp.setVgap(5);
+		gp.setHgap(5);
 		
 		//create menu1 items
 		MenuItem log_out = new MenuItem("Logout");

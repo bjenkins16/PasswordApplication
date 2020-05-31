@@ -7,9 +7,16 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class SignupScene extends Scene {
 	private GridPane gp;
@@ -25,8 +32,12 @@ public class SignupScene extends Scene {
 	}
 	
 	private void setupScene() {
-		gp.setHgap(5);
+		
+		gp.setPadding(new Insets(10,10,10,10));
 		gp.setVgap(5);
+		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		Label fl = new Label("First Name ");
 		Label ll = new Label("Last Name ");
@@ -40,8 +51,8 @@ public class SignupScene extends Scene {
 		TextField ft = new TextField();
 		TextField lt = new TextField();
 		TextField ut = new TextField();
-		TextField pt = new TextField();
-		TextField cpt = new TextField();
+		PasswordField pt = new PasswordField();
+		PasswordField cpt = new PasswordField();
 		
 		Button submit = new Button("Submit");
 		submit.setOnAction(new EventHandler<ActionEvent> () {
@@ -55,10 +66,11 @@ public class SignupScene extends Scene {
 					error.setText("*Password fields do not match");
 				} else if(!InputValidator.username(ut.getText())){
 					error.setVisible(true);
-					error.setText("*Password can only contain letters and numbers and be of length 6 to 20");
+					error.setText("*Username can only contain letters and numbers and be of length 6 to 20");
 				} else if(!InputValidator.password(pt.getText())) {
 					error.setVisible(true);
-					error.setText("*Username can only contain letters and numbers and be of length 6 to 20");
+					
+					error.setText("*Password can only contain letters and numbers\n*password must contain at least one upper and one lower case letter\n*password must contain at least one number\n*password must be of length 6 to 20");
 				} else if(controller.userExists(ut.getText())){
 					error.setText("*Username already exists");
 				} else {
@@ -76,9 +88,27 @@ public class SignupScene extends Scene {
 			}
 		});
 		
+		submit.setStyle("-fx-background-color: #00A8F3;");
+		submit.setFont(Font.font("Verdana"));
+		submit.setTextFill(Color.WHITE);
+		
+		signup.setStyle("-fx-background-color: #00A8F3;");
+		signup.setFont(Font.font("Verdana"));
+		signup.setTextFill(Color.WHITE);
+		
+		DropShadow borderGlow= new DropShadow();
+		borderGlow.setOffsetY(0f);
+		borderGlow.setOffsetX(0f);
+		borderGlow.setColor(Color.web("0xFF95FC"));
+		borderGlow.setWidth(0);
+		borderGlow.setHeight(0);
+		submit.setEffect(borderGlow);
+		signup.setEffect(borderGlow);
+		
 		
 		HBox hb = new HBox();
 		hb.setPadding(new Insets(10,10,10,10));
+		hb.setSpacing(10);
 		
 		hb.getChildren().addAll(submit, signup);
 		

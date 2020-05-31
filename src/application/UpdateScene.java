@@ -13,8 +13,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class UpdateScene extends Scene{
 	private GridPane gp;
@@ -35,7 +41,13 @@ public class UpdateScene extends Scene{
 		
 		TableView table = getTable();
 		
-		Button update = new Button("Delete");
+		gp.setPadding(new Insets(10,10,10,10));
+		gp.setVgap(5);
+		gp.setHgap(5);
+		
+		gp.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		
+		Button update = new Button("Update");
 		Button cancel = new Button("Done");
 		Button submit = new Button("Submit");
 		Button cancel2 = new Button("Cancel");
@@ -102,13 +114,14 @@ public class UpdateScene extends Scene{
 					wob_new.setWebsite(wob.getWebsite());
 				}
 				if(uname.getText().length() <= 0) {
-					wob_new.setUname(wob.getW_uname());
+					wob_new.setW_uname(wob.getW_uname());
 				}
-				if(pwd.getText().length() <= 0) {
+				if(pwd.getText().length() <= 0) {	
 					wob_new.setPwd(wob.getPwd());
 				}
 				
 				controller.updateRecord(wob, wob_new);
+				controller.updateScene();
 			}
 		});
 		
@@ -118,6 +131,33 @@ public class UpdateScene extends Scene{
 				controller.updateScene();
 			}
 		});
+		
+		update.setStyle("-fx-background-color: #00A8F3;");
+		update.setFont(Font.font("Verdana"));
+		update.setTextFill(Color.WHITE);
+		
+		cancel.setStyle("-fx-background-color: #00A8F3;");
+		cancel.setFont(Font.font("Verdana"));
+		cancel.setTextFill(Color.WHITE);
+		
+		submit.setStyle("-fx-background-color: #00A8F3;");
+		submit.setFont(Font.font("Verdana"));
+		submit.setTextFill(Color.WHITE);
+		
+		cancel2.setStyle("-fx-background-color: #00A8F3;");
+		cancel2.setFont(Font.font("Verdana"));
+		cancel2.setTextFill(Color.WHITE);
+		
+		DropShadow borderGlow= new DropShadow();
+		borderGlow.setOffsetY(0f);
+		borderGlow.setOffsetX(0f);
+		borderGlow.setColor(Color.web("0xFF95FC"));
+		borderGlow.setWidth(0);
+		borderGlow.setHeight(0);
+		submit.setEffect(borderGlow);
+		update.setEffect(borderGlow);
+		cancel.setEffect(borderGlow);
+		cancel2.setEffect(borderGlow);
 		
 		HBox hb = new HBox();
 		hb.setPadding(new Insets(10,10,10,10));
